@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Center Monitor</title>
+  <meta name="application-name" content="Center Monitor">
+  <meta name="apple-mobile-web-app-title" content="Center Monitor">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#f3b4ce">
+  <link rel="apple-touch-icon" sizes="512x512" href="center-monitor.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <style>
+    :root { color-scheme: light; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { min-height: 100vh; margin: 0; display: grid; place-items: center; background: #fff7fa; color: #191919; }
+    main { max-width: 28rem; padding: 2rem; text-align: center; }
+    img { width: 144px; height: 144px; border-radius: 28px; }
+    a { display: inline-block; margin-top: 1rem; padding: .8rem 1.1rem; border-radius: .75rem; background: #191919; color: white; text-decoration: none; }
+  </style>
+  <script>
+    const destination = "https://script.google.com/macros/s/AKfycbxBZzVFRzSJ8nl1AgGLtLyCrugqPGTH85eD5fdq3WqQyx22hWIXxcii4e5Vu3EPIgnB/exec?page=monitor";
+    const launchedFromHomeScreen = window.navigator.standalone === true || window.matchMedia("(display-mode: standalone)").matches;
+    if (launchedFromHomeScreen) window.location.replace(destination);
+  </script>
+</head>
+<body>
+  <main>
+    <img src="center-monitor.png" alt="Center Monitor icon">
+    <h1>Center Monitor</h1>
+    <p>Add this page to your iPad Home Screen to install the Center Monitor launcher.</p>
+    <a href="https://script.google.com/macros/s/AKfycbxBZzVFRzSJ8nl1AgGLtLyCrugqPGTH85eD5fdq3WqQyx22hWIXxcii4e5Vu3EPIgnB/exec?page=monitor">Open Center Monitor</a>
+  </main>
+</body>
+</html>

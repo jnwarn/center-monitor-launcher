@@ -1,0 +1,19 @@
+{
+  "name": "Center Monitor",
+  "short_name": "Center Monitor",
+  "description": "Center Monitor launcher",
+  "id": "./index.html",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fff7fa",
+  "theme_color": "#f3b4ce",
+  "icons": [
+    {
+      "src": "center-monitor.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

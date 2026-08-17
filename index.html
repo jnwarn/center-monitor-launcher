@@ -56,13 +56,63 @@
 
   <script>
     const destination = "https://script.google.com/macros/s/AKfycbx_niUEbfXauK8To9-USdIjreTOsr9LaJLLSLBcj6NVzMTD_KwQ9iDFPMMI5JvL6RHa/exec";
+    const sessionStorageKey = "kumonCenterMonitorSignedSession";
+    const fragment = new URLSearchParams(window.location.hash.slice(1));
+    const callbackSession = fragment.get("monitor-session");
+    const clearSession = fragment.has("clear-monitor-session");
 
-    const launchedFromHomeScreen =
-      window.navigator.standalone === true ||
-      window.matchMedia("(display-mode: standalone)").matches;
+    function readStoredSession() {
+      try {
+        return window.localStorage.getItem(sessionStorageKey) || "";
+      } catch (error) {
+        return "";
+      }
+    }
 
-    if (launchedFromHomeScreen) {
+    function storeSession(sessionToken) {
+      try {
+        window.localStorage.setItem(sessionStorageKey, sessionToken);
+      } catch (error) {
+        // The current authorization can still continue without persistence.
+      }
+    }
+
+    function removeStoredSession() {
+      try {
+        window.localStorage.removeItem(sessionStorageKey);
+      } catch (error) {
+        // No stored session is available to clear.
+      }
+    }
+
+    function monitorDestination(sessionToken) {
+      return sessionToken
+        ? destination + "?session=" + encodeURIComponent(sessionToken)
+        : destination;
+    }
+
+    if (callbackSession) {
+      storeSession(callbackSession);
+      window.history.replaceState(null, "", window.location.pathname);
+      window.location.replace(monitorDestination(callbackSession));
+    } else if (clearSession) {
+      removeStoredSession();
+      window.history.replaceState(null, "", window.location.pathname);
       window.location.replace(destination);
+    } else {
+      const storedSession = readStoredSession();
+      const launchedFromHomeScreen =
+        window.navigator.standalone === true ||
+        window.matchMedia("(display-mode: standalone)").matches;
+
+      if (launchedFromHomeScreen) {
+        window.location.replace(monitorDestination(storedSession));
+      }
+
+      window.addEventListener("DOMContentLoaded", () => {
+        document.getElementById("openMonitorLink").href =
+          monitorDestination(storedSession);
+      });
     }
   </script>
 </head>
@@ -75,7 +125,7 @@
 
     <p>Add this page to your iPad Home Screen to install the Center Monitor launcher.</p>
 
-    <a href="https://script.google.com/macros/s/AKfycbx_niUEbfXauK8To9-USdIjreTOsr9LaJLLSLBcj6NVzMTD_KwQ9iDFPMMI5JvL6RHa/exec">
+    <a id="openMonitorLink" href="https://script.google.com/macros/s/AKfycbx_niUEbfXauK8To9-USdIjreTOsr9LaJLLSLBcj6NVzMTD_KwQ9iDFPMMI5JvL6RHa/exec">
       Open Center Monitor
     </a>
   </main>

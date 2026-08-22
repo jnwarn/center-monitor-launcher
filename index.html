@@ -86,9 +86,11 @@
     }
 
     function monitorDestination(sessionToken) {
-      return sessionToken
-        ? destination + "?session=" + encodeURIComponent(sessionToken)
-        : destination;
+      return destination +
+        "?launch=github" +
+        (sessionToken
+          ? "&session=" + encodeURIComponent(sessionToken)
+          : "");
     }
 
     if (callbackSession) {
@@ -98,7 +100,7 @@
     } else if (clearSession) {
       removeStoredSession();
       window.history.replaceState(null, "", window.location.pathname);
-      window.location.replace(destination);
+      window.location.replace(monitorDestination(""));
     } else {
       const storedSession = readStoredSession();
       const launchedFromHomeScreen =
